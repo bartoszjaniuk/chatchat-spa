@@ -1,4 +1,3 @@
-import { useReducer } from "react";
 import { UserAuthResponse } from "src/app/api/services/authService/models/userAuthResponse.types";
 import { jwtService } from "src/app/api/services/jwtService/jwtService.service";
 
@@ -13,13 +12,13 @@ export type AuthState = {
 
 export type Token = string | undefined;
 
-type AuthActions =
+export type AuthActions =
 	| { type: "SET_AUTH_STATUS"; payload: AuthStatus }
 	| { type: "SET_ACCESS_TOKEN"; payload: Token }
 	| { type: "SET_USER_DATA"; payload: UserAuthResponse }
 	| { type: "CLEAR_STATE" };
 
-const initialState: AuthState = {
+export const initialState: AuthState = {
 	isAuthorized: false,
 	user: undefined,
 	authStatus: "idle",
@@ -52,10 +51,4 @@ export const authReducer = (
 		default:
 			throw new Error("Invalid action type.");
 	}
-};
-
-export const useAuthReducer = () => {
-	const [state, dispatch] = useReducer(authReducer, initialState);
-
-	return { state, dispatch };
 };

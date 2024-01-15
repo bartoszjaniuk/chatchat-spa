@@ -1,3 +1,5 @@
+import { useDispatchData } from "./useDispatchData/useDispatchData";
 import { useAuth } from "./useAuth/useAuth";
+import { useData } from "./useData/useData";
 
-export { useAuth };
+export { useAuth, useDispatchData, useData };

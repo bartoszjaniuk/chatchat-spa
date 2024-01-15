@@ -4,7 +4,6 @@ import { useAuth } from "./app/shared";
 
 export const App = () => {
 	const { authStatus } = useAuth();
-	console.log("App", authStatus);
 
 	if (authStatus === "loading") {
 		return <div>Loading...</div>;

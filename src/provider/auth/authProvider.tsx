@@ -3,18 +3,17 @@ import { UserCredentials } from "src/app/api/services/authService/models/userCre
 import { useSession } from "src/app/auth/hooks/useSession/useSession";
 import { PropsWithChildren, useCallback, useEffect, useMemo } from "react";
 import { AuthContext } from "./authContext";
-import { useAuthReducer } from "./useAuthReducer";
+import { useData, useDispatchData } from "src/app/shared/hooks";
 
 export const AuthProvider = ({ children }: PropsWithChildren) => {
-	const { state, dispatch } = useAuthReducer();
+	const state = useData();
+	const dispatch = useDispatchData();
 	const { mutate, data: loginData, isPending } = useLogin();
 	const { data: session, error, isLoading } = useSession(!!state.token);
-	console.log("authProvider", { isLoading, isPending });
 
 	const loadingState = isPending || isLoading;
 
 	useEffect(() => {
-		console.log("useeFFECT");
 		if (loadingState) dispatch({ type: "SET_AUTH_STATUS", payload: "loading" });
 	}, [dispatch, loadingState]);
 
