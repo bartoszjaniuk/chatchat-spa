@@ -1,17 +1,12 @@
-import { useEffect } from "react";
 import { Login } from "..";
 import { useAuth } from "src/app/shared";
+import { navigateTo } from "src/app/shared/utils/navigateTo";
 import { AppRoutes } from "src/router/router.consts";
 
-const navigate = (url: string) => window.location.assign(url);
-
 export const LoginContainer = () => {
-	const { token, login } = useAuth();
+	const { login, token } = useAuth();
 
-	useEffect(() => {
-		if (!token) return;
-		navigate(AppRoutes.HOME);
-	}, [token]);
+	if (token) navigateTo(AppRoutes.HOME);
 
 	return <Login signIn={login} />;
 };

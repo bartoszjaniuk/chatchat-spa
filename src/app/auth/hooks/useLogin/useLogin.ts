@@ -6,5 +6,6 @@ export const useLogin = () => {
 	const mutation = useMutation({
 		mutationFn: (payload: UserCredentials) => authService.login(payload),
 	});
+
 	return mutation;
 };

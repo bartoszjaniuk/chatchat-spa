@@ -3,9 +3,9 @@ import { router } from "./router/router.consts";
 import { useAuth } from "./app/shared";
 
 export const App = () => {
-	const { authStatus } = useAuth();
+	const { isAuthLoading } = useAuth();
 
-	if (authStatus === "loading") {
+	if (isAuthLoading) {
 		return <div>Loading...</div>;
 	}
 

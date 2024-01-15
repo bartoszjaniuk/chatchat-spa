@@ -1,53 +1,63 @@
 import { useLogin } from "src/app/auth/hooks";
 import { UserCredentials } from "src/app/api/services/authService/models/userCredentials.types";
 import { useSession } from "src/app/auth/hooks/useSession/useSession";
-import { PropsWithChildren, useCallback, useEffect, useMemo } from "react";
+import {
+	PropsWithChildren,
+	useCallback,
+	useEffect,
+	useMemo,
+	useState,
+} from "react";
 import { AuthContext } from "./authContext";
-import { useData, useDispatchData } from "src/app/shared/hooks";
+import { jwtService } from "src/app/api/services/jwtService/jwtService.service";
 
 export const AuthProvider = ({ children }: PropsWithChildren) => {
-	const state = useData();
-	const dispatch = useDispatchData();
-	const { mutate, data: loginData, isPending } = useLogin();
-	const { data: session, error, isLoading } = useSession(!!state.token);
-
-	const loadingState = isPending || isLoading;
-
-	useEffect(() => {
-		if (loadingState) dispatch({ type: "SET_AUTH_STATUS", payload: "loading" });
-	}, [dispatch, loadingState]);
-
-	useEffect(() => {
-		if (!loginData) return;
-		dispatch({ type: "SET_ACCESS_TOKEN", payload: loginData.access_token });
-	}, [loginData, dispatch]);
+	const [user, setUser] = useState(undefined);
+	const [token, setToken] = useState(jwtService.getToken());
+	const { mutate, data: loginData } = useLogin();
+	const {
+		data: session,
+		error,
+		isLoading: isAuthLoading,
+	} = useSession(!!token);
+	const isAuthorized = !!session;
 
 	useEffect(() => {
-		if (session) {
-			dispatch({ type: "SET_AUTH_STATUS", payload: "loading" });
-			dispatch({ type: "SET_USER_DATA", payload: session });
+		if (session) setUser(session);
+	}, [session]);
+
+	useEffect(() => {
+		if (loginData) {
+			jwtService.setToken(loginData.access_token);
+			setToken(loginData.access_token);
 		}
-	}, [dispatch, session]);
+	}, [loginData]);
 
 	useEffect(() => {
-		if (!error) return;
-		dispatch({ type: "CLEAR_STATE" });
-	}, [dispatch, error]);
+		if (error) {
+			setUser(undefined);
+			setToken(null);
+			jwtService.removeToken();
+		}
+	}, [error]);
 
 	const login = useCallback(
 		(payload: UserCredentials) => {
-			dispatch({ type: "SET_AUTH_STATUS", payload: "loading" });
 			mutate(payload);
 		},
-		[dispatch, mutate],
+		[mutate],
 	);
 
 	const value = useMemo(() => {
 		return {
-			...state,
+			authStatus: "success",
+			user,
+			isAuthorized,
+			token,
 			login,
+			isAuthLoading,
 		};
-	}, [login, state]);
+	}, [user, isAuthorized, token, login, isAuthLoading]);
 
 	return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

@@ -4,18 +4,15 @@ import "src/styles/styles.css";
 import { ReactQueryProvider } from "./provider/reactQueryProvider/ReactQueryProvider";
 import { ErrorBoundaryWrapper } from "./app/errorBoundaryWrapper";
 import { App } from "./App";
-import { AuthProvider } from "./provider/auth/authProvider";
-import { DataProvider } from "./provider/data/DataProvider";
+import { AuthProvider } from "./provider/auth/AuthProvider";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
 	<React.StrictMode>
 		<ErrorBoundaryWrapper>
 			<ReactQueryProvider>
-				<DataProvider>
-					<AuthProvider>
-						<App />
-					</AuthProvider>
-				</DataProvider>
+				<AuthProvider>
+					<App />
+				</AuthProvider>
 			</ReactQueryProvider>
 		</ErrorBoundaryWrapper>
 	</React.StrictMode>,
