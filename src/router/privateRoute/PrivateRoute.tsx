@@ -1,12 +1,14 @@
-import { Navigate, Outlet } from "react-router-dom";
-import { useAuth } from "src/app/shared";
-import { AppRoutes } from "../router.consts";
+import { PropsWithChildren } from "react";
+import { Outlet } from "react-router-dom";
+import { useSession } from "src/app/auth/hooks/useSession/useSession";
 
-const PrivateRoute = () => {
-	const { token } = useAuth();
+const PrivateRoute = ({ children }: PropsWithChildren) => {
+	const { authStatus } = useSession();
 
-	if (!token) return <Navigate to={AppRoutes.AUTH_LOGIN} replace />;
-	return <Outlet />;
+	if (authStatus === "authorized")
+		return children ? <>{children}</> : <Outlet />;
+
+	return null;
 };
 
 export default PrivateRoute;

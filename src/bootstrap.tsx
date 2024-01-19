@@ -4,16 +4,16 @@ import "src/styles/styles.css";
 import { ReactQueryProvider } from "./provider/reactQueryProvider/ReactQueryProvider";
 import { ErrorBoundaryWrapper } from "./app/errorBoundaryWrapper";
 import { App } from "./App";
-import { AuthProvider } from "./provider/auth/AuthProvider";
+import { BrowserRouter } from "react-router-dom";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
 	<React.StrictMode>
 		<ErrorBoundaryWrapper>
-			<ReactQueryProvider>
-				<AuthProvider>
+			<BrowserRouter>
+				<ReactQueryProvider>
 					<App />
-				</AuthProvider>
-			</ReactQueryProvider>
+				</ReactQueryProvider>
+			</BrowserRouter>
 		</ErrorBoundaryWrapper>
 	</React.StrictMode>,
 );
