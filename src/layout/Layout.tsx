@@ -1,15 +1,13 @@
 import "src/styles/styles.css";
 import { Sidebar } from "./sidebar/Sidebar";
 import { Container } from "./container/Container";
-import { Outlet } from "react-router-dom";
+import { PropsWithChildren } from "react";
 
-export const Layout = () => {
+export const Layout = ({ children }: PropsWithChildren) => {
 	return (
 		<div className="flex min-h-screen">
 			<Sidebar />
-			<Container>
-				<Outlet />
-			</Container>
+			<Container>{children}</Container>
 		</div>
 	);
 };

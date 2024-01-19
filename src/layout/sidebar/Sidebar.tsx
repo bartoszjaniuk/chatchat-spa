@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
 import { AppRoutes, OtherRoutes } from "./enums/appRoutes.enum";
+import { useLogout } from "src/core/useLogout";
 
 export const Sidebar = () => {
+	const { refetch } = useLogout();
 	return (
-		<nav className="min-h-full w-52 bg-white p-4">
+		<nav className="min-h-full w-96 bg-white p-4">
 			<Link to={AppRoutes.HOME}>
 				<div className="flex flex-col items-center border-b pb-4">
 					<h1 className="text-lg">Advanced React</h1>
@@ -17,6 +19,7 @@ export const Sidebar = () => {
 						<Link to={route}>Chapter {index + 1}</Link>
 					</li>
 				))}
+				<li onClick={() => refetch()}>Log Out</li>
 			</ul>
 		</nav>
 	);

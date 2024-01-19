@@ -1,13 +1,11 @@
-import { RouterProvider } from "react-router-dom";
-import { router } from "./router/router.consts";
-import { useAuth } from "./app/shared";
+import { useAuth } from "./auth/hooks/useAuth";
+import { AppRouter } from "./router/AppRouter";
 
 export const App = () => {
-	const { isAuthLoading } = useAuth();
+	const { authStatus } = useAuth();
 
-	if (isAuthLoading) {
-		return <div>Loading...</div>;
-	}
+	if (authStatus === "loading")
+		return <div>Something amazing is loading...</div>;
 
-	return <RouterProvider router={router} />;
+	return <AppRouter />;
 };

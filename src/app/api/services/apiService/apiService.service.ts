@@ -1,29 +1,27 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
-import { jwtService } from "../jwtService/jwtService.service";
 
 export abstract class ApiService {
 	protected httpClient: AxiosInstance;
-	private jwtService: typeof jwtService;
 
 	constructor(baseURL: string) {
 		this.httpClient = axios.create({
 			baseURL,
 			withCredentials: true,
 		});
-		// TODO: CHECK IF THIS IS WORKING
-		this.jwtService = jwtService;
-		this.httpClient.interceptors.request.use(
-			(config) => {
-				const token = this.jwtService.getToken();
-				if (token) {
-					config.headers["Authorization"] = "Bearer " + token;
-				}
-				return config;
-			},
-			(error) => {
-				return Promise.reject(error);
-			},
-		);
+
+		// this.httpClient.interceptors.response.use(
+		// 	(res) => res, // response is unchanged
+		// 	refreshInterceptor(
+		// 		this.httpClient,
+		// 		refreshToken,
+		// 		redirectUnauthorizedUser,
+		// 	),
+		// );
+
+		// this.httpClient.interceptors.response.use(
+		// 	(res) => res,
+		// 	codeRedirectionInterceptor(),
+		// );
 	}
 
 	protected responseHandler<T = unknown>({ data }: AxiosResponse<T>) {

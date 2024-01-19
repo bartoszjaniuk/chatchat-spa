@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { getAuthApiService } from "src/app/api/services/authService/authService.service";
-import { AuthStatus } from "src/core/auth/context/AuthContext";
+import { AuthStatus } from "./auth/context/AuthContext";
 
 const SESSION_QUERY_KEY = ["session"];
 

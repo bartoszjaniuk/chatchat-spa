@@ -1,3 +1,9 @@
 export type LoginResponse = {
-	access_token: string;
+	accessToken: string;
+	refreshToken: string;
+	user: {
+		email: string;
+		avatar: string;
+		bio: string;
+	};
 };
