@@ -1,4 +1,8 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
+import { refreshInterceptor } from "../../utils/refreshInterceptor";
+import { refreshToken } from "../../utils/refreshToken";
+import { redirectUnauthorizedUser } from "../../utils/redirectUnauthorizedUser";
+import { codeRedirectionInterceptor } from "../../utils/codeRedirection";
 
 export abstract class ApiService {
 	protected httpClient: AxiosInstance;
@@ -8,6 +12,20 @@ export abstract class ApiService {
 			baseURL,
 			withCredentials: true,
 		});
+
+		this.httpClient.interceptors.response.use(
+			(res) => res, // response is unchanged
+			refreshInterceptor(
+				this.httpClient,
+				refreshToken,
+				redirectUnauthorizedUser,
+			),
+		);
+
+		this.httpClient.interceptors.response.use(
+			(res) => res,
+			codeRedirectionInterceptor(),
+		);
 	}
 
 	protected responseHandler<T = unknown>({ data }: AxiosResponse<T>) {

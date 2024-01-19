@@ -1,12 +1,16 @@
+import { useNavigate } from "react-router-dom";
 import { Login } from "..";
-import { useAuth } from "src/app/shared";
-import { navigateTo } from "src/app/shared/utils/navigateTo";
-import { AppRoutes } from "src/router/router.consts";
+import { useLogin } from "../hooks";
+import { UserCredentials } from "src/app/api/services/authService/models/userCredentials.types";
+import { AppRoutes } from "src/router/appRoutes.enum";
 
 export const LoginContainer = () => {
-	const { login, token } = useAuth();
+	const { mutate } = useLogin();
+	const navigate = useNavigate();
 
-	if (token) navigateTo(AppRoutes.HOME);
-
-	return <Login signIn={login} />;
+	const signIn = (userCredentials: UserCredentials) => {
+		mutate(userCredentials);
+		navigate(AppRoutes.HOME);
+	};
+	return <Login signIn={signIn} />;
 };
