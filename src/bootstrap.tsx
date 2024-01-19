@@ -12,9 +12,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
 		<ErrorBoundaryWrapper>
 			<BrowserRouter>
 				<ReactQueryProvider>
-					{/* <GlobalAuthProvider> */}
-					<App />
-					{/* </GlobalAuthProvider> */}
+					<GlobalAuthProvider>
+						<App />
+					</GlobalAuthProvider>
 				</ReactQueryProvider>
 			</BrowserRouter>
 		</ErrorBoundaryWrapper>
