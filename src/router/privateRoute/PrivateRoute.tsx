@@ -3,6 +3,7 @@ import { Outlet } from "react-router-dom";
 import { useSession } from "src/app/auth/hooks/useSession/useSession";
 
 const PrivateRoute = ({ children }: PropsWithChildren) => {
+	// const { authStatus } = useAuth();
 	const { authStatus } = useSession();
 
 	if (authStatus === "authorized")

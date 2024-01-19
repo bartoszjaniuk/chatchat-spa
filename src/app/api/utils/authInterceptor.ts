@@ -13,7 +13,7 @@ export const AuthInterceptor = (err: AxiosError) => {
 	if (
 		[ErrorStatus.UNAUTHORIZED, ErrorStatus.FORBIDDEN].includes(Number(status))
 	) {
-		redirectUnauthorizedUser();
+		return redirectUnauthorizedUser();
 	}
 
 	return Promise.reject(err);

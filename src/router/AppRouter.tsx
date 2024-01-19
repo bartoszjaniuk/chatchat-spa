@@ -21,6 +21,7 @@ export const ErrorPage = () => {
 };
 
 export const AppRouter = () => {
+	console.log("AppRouter");
 	return (
 		<Routes>
 			<Route

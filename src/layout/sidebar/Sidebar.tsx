@@ -1,7 +1,16 @@
-import { Link } from "react-router-dom";
-import { AppRoutes, OtherRoutes } from "./enums/appRoutes.enum";
+import { Link, useNavigate } from "react-router-dom";
+import { OtherRoutes } from "./enums/appRoutes.enum";
+import { useLogout } from "src/app/auth/hooks/useLogout/useLogout";
+import { AppRoutes } from "src/router/appRoutes.enum";
 
 export const Sidebar = () => {
+	const { refetch } = useLogout();
+	const navigate = useNavigate();
+
+	const logout = () => {
+		refetch();
+		navigate(AppRoutes.AUTH_LOGIN);
+	};
 	return (
 		<nav className="min-h-full w-52 bg-white p-4">
 			<Link to={AppRoutes.HOME}>
@@ -17,6 +26,7 @@ export const Sidebar = () => {
 						<Link to={route}>Chapter {index + 1}</Link>
 					</li>
 				))}
+				<li onClick={logout}>Logout</li>
 			</ul>
 		</nav>
 	);

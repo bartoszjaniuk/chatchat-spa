@@ -11,5 +11,8 @@ export const useSession = () => {
 		queryFn: authService.getSession,
 	});
 
-	return { data, authStatus: resolveAuthStatus(data, status) };
+	return {
+		data,
+		authStatus: resolveAuthStatus(data, status),
+	};
 };

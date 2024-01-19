@@ -1,9 +1,10 @@
 import { AuthStatus } from "../models";
 import { SessionPayload } from "../models/sessionPayload.model";
+import { SessionQueryStatus } from "../models/sessionQueryStatus";
 
 export const resolveAuthStatus = (
 	session: SessionPayload | undefined,
-	sessionQueryStatus: "success" | "error" | "pending",
+	sessionQueryStatus: SessionQueryStatus,
 ): AuthStatus => {
 	if (sessionQueryStatus === "pending") {
 		return "loading";

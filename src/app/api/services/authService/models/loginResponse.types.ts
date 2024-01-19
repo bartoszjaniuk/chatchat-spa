@@ -1,3 +1,5 @@
+import { UserAuthResponse } from "./userAuthResponse.types";
+
 export type LoginResponse = {
-	access_token: string;
+	user: UserAuthResponse;
 };
