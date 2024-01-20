@@ -11,6 +11,7 @@ import { UserAuthResponse } from "../api/services/authService/models/userAuthRes
 import { AuthStatus } from "./models";
 import { authService } from "../api/services/authService/authService.service";
 import { userService } from "../api/services/userService/user.service";
+import { AppRoutes } from "src/router/appRoutes.enum";
 
 export const AuthContext = createContext<AuthState | undefined>(undefined);
 
@@ -84,22 +85,35 @@ const AuthDataProvider = ({ children }: PropsWithChildren) => {
 export const AuthProvider = ({ children }: PropsWithChildren) => {
 	const { authStatus, user } = useDataContext();
 	const dispatch = useActionsContext();
-	useEffect(() => {
-		const getSession = async () => {
-			dispatch({ type: "SET_AUTH_STATE", payload: "loading" });
-			try {
-				const session = await authService.getSession();
-				if (!session) return;
-				const user = await userService.getUser();
-				if (user) {
-					dispatch({ type: "SET_USER", payload: user });
-				}
-			} catch (error) {
-				dispatch({ type: "SET_AUTH_STATE", payload: "unauthorized" });
+	const isAuthPage = window.location.href.includes(AppRoutes.AUTH_LOGIN);
+
+	const getSession = async (signal: AbortSignal) => {
+		try {
+			const session = await authService.getSession(signal);
+			if (!session) return;
+			const user = await userService.getUser();
+			if (user.data) {
+				dispatch({ type: "SET_USER", payload: user.data });
 			}
+			return;
+		} catch (error) {
+			if (user) return;
+			dispatch({ type: "SET_AUTH_STATE", payload: "unauthorized" });
+		}
+	};
+
+	useEffect(() => {
+		if (isAuthPage) return;
+		dispatch({ type: "SET_AUTH_STATE", payload: "loading" });
+		const abortController = new AbortController();
+		const signal = abortController.signal;
+
+		getSession(signal);
+
+		return () => {
+			abortController.abort();
 		};
-		getSession();
-	}, [dispatch]);
+	}, []);
 
 	const value = useMemo(() => ({ authStatus, user }), [authStatus, user]);
 	return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

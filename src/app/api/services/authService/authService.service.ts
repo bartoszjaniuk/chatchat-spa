@@ -33,9 +33,9 @@ class AuthService {
 		this.responseHandler(
 			await this.httpClient.get(authServiceQueryKeys.logout()),
 		);
-	getSession = async () =>
+	getSession = async (signal: AbortSignal) =>
 		this.responseHandler(
-			await this.httpClient.get(authServiceQueryKeys.session()),
+			await this.httpClient.get(authServiceQueryKeys.session(), { signal }),
 		);
 }
 export const authService = new AuthService(API_URL);
