@@ -1,5 +1,5 @@
-import { useAuth } from "./app/auth/auth.container";
-import { AppRouter } from "./router/AppRouter";
+import { useAuth } from "./app/providers/authProvider/AuthProvider";
+import { AppRouter } from "./app/router/AppRouter";
 
 export const App = () => {
 	const { authStatus } = useAuth();

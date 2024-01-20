@@ -1,7 +1,7 @@
 import { Outlet, Route, Routes, useRouteError } from "react-router-dom";
 import { LoginContainer } from "src/app/auth/login/LoginContainer";
 
-import { Layout } from "src/layout";
+import { Layout } from "src/app/layout";
 import PrivateRoute from "./privateRoute/PrivateRoute";
 import { AppRoutes } from "./appRoutes.enum";
 

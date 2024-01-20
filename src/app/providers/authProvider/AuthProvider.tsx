@@ -7,11 +7,11 @@ import {
 	useMemo,
 	useReducer,
 } from "react";
-import { UserAuthResponse } from "../api/services/authService/models/userAuthResponse.types";
-import { AuthStatus } from "./models";
-import { authService } from "../api/services/authService/authService.service";
-import { userService } from "../api/services/userService/user.service";
-import { AppRoutes } from "src/router/appRoutes.enum";
+import { UserAuthResponse } from "../../api/services/authService/models/userAuthResponse.types";
+import { AuthStatus } from "../../auth/models";
+import { authService } from "../../api/services/authService/authService.service";
+import { userService } from "../../api/services/userService/user.service";
+import { AppRoutes } from "src/app/router/appRoutes.enum";
 
 export const AuthContext = createContext<AuthState | undefined>(undefined);
 

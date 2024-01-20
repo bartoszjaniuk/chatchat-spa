@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { OtherRoutes } from "./enums/appRoutes.enum";
 import { useLogout } from "src/app/auth/hooks/useLogout/useLogout";
-import { AppRoutes } from "src/router/appRoutes.enum";
+import { AppRoutes } from "src/app/router/appRoutes.enum";
 
 export const Sidebar = () => {
 	const { refetch } = useLogout();

@@ -1,6 +1,6 @@
 import { PropsWithChildren } from "react";
 import { Outlet } from "react-router-dom";
-import { useAuth } from "src/app/auth/auth.container";
+import { useAuth } from "src/app/providers/authProvider/AuthProvider";
 
 const PrivateRoute = ({ children }: PropsWithChildren) => {
 	const { authStatus } = useAuth();

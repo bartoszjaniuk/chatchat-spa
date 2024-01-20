@@ -1,4 +1,4 @@
-import { AppRoutes } from "src/router/appRoutes.enum";
+import { AppRoutes } from "src/app/router/appRoutes.enum";
 
 export const redirectUnauthorizedUser = () => {
 	return window.location.assign(AppRoutes.AUTH_LOGIN);
