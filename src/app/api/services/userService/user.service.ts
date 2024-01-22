@@ -10,6 +10,10 @@ export class UserService extends ApiService {
 	async getUser() {
 		return this.httpClient.get(userServiceQueryKeys.me());
 	}
+
+	async getAppUsers() {
+		return this.httpClient.get(userServiceQueryKeys.appUsers());
+	}
 }
 
 export const userService = new UserService();

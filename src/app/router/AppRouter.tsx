@@ -4,6 +4,7 @@ import { LoginContainer } from "src/app/auth/login/LoginContainer";
 import { Layout } from "src/app/layout";
 import PrivateRoute from "./privateRoute/PrivateRoute";
 import { AppRoutes } from "./appRoutes.enum";
+import { AppUsers } from "../users/appUsers/AppUsers";
 
 export const Homepage = () => <div>Homepage</div>;
 export const ErrorPage = () => {
@@ -33,6 +34,7 @@ export const AppRouter = () => {
 				}
 			>
 				<Route element={<Homepage />} path={AppRoutes.HOME} />
+				<Route element={<AppUsers />} path={AppRoutes.APP_USERS} />
 				<Route element={<ErrorPage />} path={"*"} />
 			</Route>
 			<Route element={<LoginContainer />} path={AppRoutes.AUTH_LOGIN} />

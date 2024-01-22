@@ -1,17 +1,18 @@
 import { useNavigate } from "react-router-dom";
 import { useLogout } from "src/app/auth/hooks/useLogout/useLogout";
-import { AppRoutes } from "src/app/router/appRoutes.enum";
 import LogoUrl from "src/assets/chatchat-logo.png";
 import { SingleButton } from "../singleButton/SingleButton";
 import { EmojiIcon } from "../emojiIcon/EmojiIcon";
+import { useActionsContext } from "src/app/providers/authProvider/AuthProvider";
 
 export const Sidebar = () => {
 	const { refetch } = useLogout();
 	const navigate = useNavigate();
+	const dispatch = useActionsContext();
 
 	const logout = () => {
 		refetch();
-		navigate(AppRoutes.AUTH_LOGIN);
+		dispatch({ type: "CLEAR_SESSION" });
 	};
 	return (
 		<div
@@ -23,7 +24,14 @@ export const Sidebar = () => {
 				<p className="text-2xl ">Chat Chat</p>
 			</div>
 			<div className="flex h-full md:flex-col">
-				<SingleButton icon={<EmojiIcon>🍻</EmojiIcon>}>Friends</SingleButton>
+				<SingleButton
+					onClick={() => {
+						navigate("/users/all");
+					}}
+					icon={<EmojiIcon>🍻</EmojiIcon>}
+				>
+					Friends
+				</SingleButton>
 				<SingleButton icon={<EmojiIcon>📖</EmojiIcon>}>Messages</SingleButton>
 				<SingleButton icon={<EmojiIcon>🙎🏻‍♂️</EmojiIcon>}>Profile</SingleButton>
 				<SingleButton onClick={logout} icon={<EmojiIcon>🏃🏻‍♂️</EmojiIcon>}>

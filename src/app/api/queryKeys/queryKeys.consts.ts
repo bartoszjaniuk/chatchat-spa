@@ -7,4 +7,5 @@ export const authServiceQueryKeys = {
 
 export const userServiceQueryKeys = {
 	me: () => "users/me",
+	appUsers: () => "users/app",
 };

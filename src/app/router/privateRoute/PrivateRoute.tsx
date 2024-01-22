@@ -5,6 +5,8 @@ import { useAuth } from "src/app/providers/authProvider/AuthProvider";
 const PrivateRoute = ({ children }: PropsWithChildren) => {
 	const { authStatus } = useAuth();
 
+	console.log({ authStatus }, "PrivateRoute");
+
 	if (authStatus === "authorized")
 		return children ? <>{children}</> : <Outlet />;
 

@@ -13,6 +13,7 @@ import { authService } from "../../api/services/authService/authService.service"
 import { userService } from "../../api/services/userService/user.service";
 import { AppRoutes } from "src/app/router/appRoutes.enum";
 import { useNavigate } from "react-router-dom";
+import { isAxiosError } from "src/app/api/utils/isAxiosError";
 
 export const AuthContext = createContext<AuthState | undefined>(undefined);
 
@@ -31,7 +32,8 @@ type AuthState = {
 
 type AuthActions =
 	| { type: "SET_AUTH_STATE"; payload: AuthStatus }
-	| { type: "SET_USER"; payload: any };
+	| { type: "SET_USER"; payload: any }
+	| { type: "CLEAR_SESSION" };
 
 export const authReducer = (
 	state: AuthState,
@@ -42,6 +44,9 @@ export const authReducer = (
 			return { ...state, authStatus: action.payload };
 		case "SET_USER": {
 			return { ...state, authStatus: "authorized", user: action.payload };
+		}
+		case "CLEAR_SESSION": {
+			return initialState;
 		}
 	}
 };
@@ -98,6 +103,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
 			}
 			return;
 		} catch (error) {
+			if (isAxiosError(error) && error.code === "ERR_CANCELED") return;
 			if (user) return;
 			dispatch({ type: "SET_AUTH_STATE", payload: "unauthorized" });
 			navigate(AppRoutes.AUTH_LOGIN);
@@ -105,16 +111,17 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
 	};
 
 	useEffect(() => {
-		dispatch({ type: "SET_AUTH_STATE", payload: "loading" });
 		const abortController = new AbortController();
 		const signal = abortController.signal;
+		if (user) return;
+		dispatch({ type: "SET_AUTH_STATE", payload: "loading" });
 
 		getSession(signal);
 
 		return () => {
 			abortController.abort();
 		};
-	}, []);
+	}, [user]);
 
 	const value = useMemo(() => ({ authStatus, user }), [authStatus, user]);
 	return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

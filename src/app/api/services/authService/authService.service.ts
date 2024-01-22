@@ -1,7 +1,6 @@
 import { authServiceQueryKeys } from "./../../queryKeys/queryKeys.consts";
 import { API_URL } from "src/envs";
 import { LoginResponse } from "./models/loginResponse.types";
-import { AuthInterceptor } from "../../utils/authInterceptor";
 import axios, { AxiosInstance, AxiosResponse } from "axios";
 import { UserCredentials } from "./models/userCredentials.types";
 
@@ -13,8 +12,6 @@ class AuthService {
 			baseURL: baseUrl,
 			withCredentials: true,
 		});
-
-		// this.httpClient.interceptors.response.use((res) => res, AuthInterceptor);
 	}
 
 	private responseHandler = <T = unknown>({ data }: AxiosResponse<T>) => {
