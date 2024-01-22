@@ -14,7 +14,7 @@ class AuthService {
 			withCredentials: true,
 		});
 
-		this.httpClient.interceptors.response.use((res) => res, AuthInterceptor);
+		// this.httpClient.interceptors.response.use((res) => res, AuthInterceptor);
 	}
 
 	private responseHandler = <T = unknown>({ data }: AxiosResponse<T>) => {

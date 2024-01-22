@@ -15,6 +15,5 @@ export const AuthInterceptor = (err: AxiosError) => {
 	) {
 		return redirectUnauthorizedUser();
 	}
-
 	return Promise.reject(err);
 };

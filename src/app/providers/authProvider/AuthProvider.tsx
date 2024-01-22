@@ -12,6 +12,7 @@ import { AuthStatus } from "../../auth/models";
 import { authService } from "../../api/services/authService/authService.service";
 import { userService } from "../../api/services/userService/user.service";
 import { AppRoutes } from "src/app/router/appRoutes.enum";
+import { useNavigate } from "react-router-dom";
 
 export const AuthContext = createContext<AuthState | undefined>(undefined);
 
@@ -85,7 +86,7 @@ const AuthDataProvider = ({ children }: PropsWithChildren) => {
 export const AuthProvider = ({ children }: PropsWithChildren) => {
 	const { authStatus, user } = useDataContext();
 	const dispatch = useActionsContext();
-	const isAuthPage = window.location.href.includes(AppRoutes.AUTH_LOGIN);
+	const navigate = useNavigate();
 
 	const getSession = async (signal: AbortSignal) => {
 		try {
@@ -99,11 +100,11 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
 		} catch (error) {
 			if (user) return;
 			dispatch({ type: "SET_AUTH_STATE", payload: "unauthorized" });
+			navigate(AppRoutes.AUTH_LOGIN);
 		}
 	};
 
 	useEffect(() => {
-		if (isAuthPage) return;
 		dispatch({ type: "SET_AUTH_STATE", payload: "loading" });
 		const abortController = new AbortController();
 		const signal = abortController.signal;
