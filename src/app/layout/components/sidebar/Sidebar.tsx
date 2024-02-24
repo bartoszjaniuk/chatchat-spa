@@ -6,6 +6,14 @@ import { EmojiIcon } from "../emojiIcon/EmojiIcon";
 import { useActionsContext } from "src/app/providers/authProvider/AuthProvider";
 import { AppRoutes } from "src/app/router/enums/appRoutes.enum";
 
+import {
+	GoPeople,
+	GoPerson,
+	GoSignOut,
+	GoUnread,
+	GoSearch,
+} from "react-icons/go";
+
 export const Sidebar = () => {
 	const { refetch } = useLogout();
 	const navigate = useNavigate();
@@ -31,7 +39,11 @@ export const Sidebar = () => {
 					onClick={() => {
 						navigate("/search");
 					}}
-					icon={<EmojiIcon>🔍</EmojiIcon>}
+					icon={
+						<EmojiIcon>
+							<GoSearch />
+						</EmojiIcon>
+					}
 				>
 					Search
 				</SingleButton>
@@ -39,7 +51,11 @@ export const Sidebar = () => {
 					onClick={() => {
 						navigate("/users");
 					}}
-					icon={<EmojiIcon>🍻</EmojiIcon>}
+					icon={
+						<EmojiIcon>
+							<GoPeople />
+						</EmojiIcon>
+					}
 				>
 					Friends
 				</SingleButton>
@@ -48,12 +64,31 @@ export const Sidebar = () => {
 					onClick={() => {
 						navigate("/messages");
 					}}
-					icon={<EmojiIcon>📖</EmojiIcon>}
+					icon={
+						<EmojiIcon>
+							<GoUnread />
+						</EmojiIcon>
+					}
 				>
 					Messages
 				</SingleButton>
-				<SingleButton icon={<EmojiIcon>🙎🏻‍♂️</EmojiIcon>}>Profile</SingleButton>
-				<SingleButton onClick={handleLogout} icon={<EmojiIcon>🏃🏻‍♂️</EmojiIcon>}>
+				<SingleButton
+					icon={
+						<EmojiIcon>
+							<GoPerson />
+						</EmojiIcon>
+					}
+				>
+					Profile
+				</SingleButton>
+				<SingleButton
+					onClick={handleLogout}
+					icon={
+						<EmojiIcon>
+							<GoSignOut />
+						</EmojiIcon>
+					}
+				>
 					Logout
 				</SingleButton>
 			</div>
