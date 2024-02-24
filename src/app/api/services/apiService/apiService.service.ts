@@ -14,7 +14,7 @@ export abstract class ApiService {
 		});
 
 		this.httpClient.interceptors.response.use(
-			(res) => res, // response is unchanged
+			(res) => res,
 			refreshInterceptor(
 				this.httpClient,
 				refreshToken,

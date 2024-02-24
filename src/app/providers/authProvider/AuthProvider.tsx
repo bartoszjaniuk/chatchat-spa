@@ -6,14 +6,15 @@ import {
 	useEffect,
 	useMemo,
 	useReducer,
+	useState,
 } from "react";
 import { UserAuthResponse } from "../../api/services/authService/models/userAuthResponse.types";
-import { AuthStatus } from "../../auth/models";
 import { authService } from "../../api/services/authService/authService.service";
 import { userService } from "../../api/services/userService/user.service";
-import { AppRoutes } from "src/app/router/appRoutes.enum";
+import { AppRoutes } from "src/app/router/enums/appRoutes.enum";
 import { useNavigate } from "react-router-dom";
 import { isAxiosError } from "src/app/api/utils/isAxiosError";
+import { AuthStatus } from "src/app/auth";
 
 export const AuthContext = createContext<AuthState | undefined>(undefined);
 
@@ -92,14 +93,15 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
 	const { authStatus, user } = useDataContext();
 	const dispatch = useActionsContext();
 	const navigate = useNavigate();
+	const [isFetching, setIsFetching] = useState(false);
 
-	const getSession = async (signal: AbortSignal) => {
+	const getSession = async () => {
 		try {
-			const session = await authService.getSession(signal);
+			const session = await authService.getSession();
 			if (!session) return;
 			const user = await userService.getUser();
-			if (user.data) {
-				dispatch({ type: "SET_USER", payload: user.data });
+			if (user) {
+				dispatch({ type: "SET_USER", payload: user });
 			}
 			return;
 		} catch (error) {
@@ -111,17 +113,14 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
 	};
 
 	useEffect(() => {
-		const abortController = new AbortController();
-		const signal = abortController.signal;
-		if (user) return;
-		dispatch({ type: "SET_AUTH_STATE", payload: "loading" });
+		setIsFetching(true);
 
-		getSession(signal);
-
-		return () => {
-			abortController.abort();
-		};
-	}, [user]);
+		if (isFetching) {
+			dispatch({ type: "SET_AUTH_STATE", payload: "loading" });
+			getSession();
+			return;
+		}
+	}, [isFetching]);
 
 	const value = useMemo(() => ({ authStatus, user }), [authStatus, user]);
 	return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

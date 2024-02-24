@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { authService } from "src/app/api/services/authService/authService.service";
 import { UserCredentials } from "src/app/api/services/authService/models/userCredentials.types";
-import { AppRoutes } from "src/app/router/appRoutes.enum";
+import { AppRoutes } from "src/app/router/enums/appRoutes.enum";
 import { useActionsContext } from "../../../providers/authProvider/AuthProvider";
 
 // TODO: Move it into AuthProvider

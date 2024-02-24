@@ -1,25 +1,14 @@
-import { Outlet, Route, Routes, useRouteError } from "react-router-dom";
-import { LoginContainer } from "src/app/auth/login/LoginContainer";
+import { Outlet, Route, Routes } from "react-router-dom";
+import { LoginContainer } from "src/app/auth/components/login/LoginContainer";
 
 import { Layout } from "src/app/layout";
-import PrivateRoute from "./privateRoute/PrivateRoute";
-import { AppRoutes } from "./appRoutes.enum";
-import { AppUsers } from "../users/appUsers/AppUsers";
-
-export const Homepage = () => <div>Homepage</div>;
-export const ErrorPage = () => {
-	const error = useRouteError();
-
-	return (
-		<div id="error-page">
-			<h1>Oops!</h1>
-			<p>Sorry, an unexpected error has occurred.</p>
-			<p>
-				<i>{error.statusText || error.message}</i>
-			</p>
-		</div>
-	);
-};
+import PrivateRoute from "./components/privateRoute/PrivateRoute";
+import { AppRoutes } from "./enums/appRoutes.enum";
+import { SearchUsers } from "../users/searchUsers/SearchUsers";
+import { Conversation } from "../conversation/Conversation";
+import { ErrorPage } from "../error/ErrorPage";
+import { Home } from "../home/Home";
+import { UserThreads } from "../userThreads/UserThreads";
 
 export const AppRouter = () => {
 	return (
@@ -33,8 +22,10 @@ export const AppRouter = () => {
 					</PrivateRoute>
 				}
 			>
-				<Route element={<Homepage />} path={AppRoutes.HOME} />
-				<Route element={<AppUsers />} path={AppRoutes.APP_USERS} />
+				<Route element={<Home />} path={AppRoutes.HOME} />
+				<Route element={<SearchUsers />} path={AppRoutes.SEARCH} />
+				<Route element={<UserThreads />} path={AppRoutes.MESSAGES} />
+				<Route element={<Conversation />} path={AppRoutes.CONVERSATION} />
 				<Route element={<ErrorPage />} path={"*"} />
 			</Route>
 			<Route element={<LoginContainer />} path={AppRoutes.AUTH_LOGIN} />

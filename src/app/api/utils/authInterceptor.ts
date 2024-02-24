@@ -1,5 +1,4 @@
 import { type AxiosError } from "axios";
-
 import { redirectUnauthorizedUser } from "./redirectUnauthorizedUser";
 
 export enum ErrorStatus {
@@ -7,7 +6,7 @@ export enum ErrorStatus {
 	FORBIDDEN = 403,
 }
 
-export const AuthInterceptor = (err: AxiosError) => {
+export const authInterceptor = (err: AxiosError) => {
 	const status = err?.response?.status;
 
 	if (

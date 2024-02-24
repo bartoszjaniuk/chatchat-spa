@@ -14,7 +14,6 @@ export const refreshInterceptor =
 	async (error: unknown) => {
 		if (!isAxiosError(error)) return;
 		const originalRequest = error.config;
-		console.log(originalRequest, " tutaj");
 
 		if (isAuthError(error) && originalRequest && !originalRequest._retry) {
 			originalRequest._retry = true;

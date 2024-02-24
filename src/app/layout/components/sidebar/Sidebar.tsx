@@ -4,16 +4,19 @@ import LogoUrl from "src/assets/chatchat-logo.png";
 import { SingleButton } from "../singleButton/SingleButton";
 import { EmojiIcon } from "../emojiIcon/EmojiIcon";
 import { useActionsContext } from "src/app/providers/authProvider/AuthProvider";
+import { AppRoutes } from "src/app/router/enums/appRoutes.enum";
 
 export const Sidebar = () => {
 	const { refetch } = useLogout();
 	const navigate = useNavigate();
 	const dispatch = useActionsContext();
 
-	const logout = () => {
-		refetch();
+	const handleLogout = () => {
 		dispatch({ type: "CLEAR_SESSION" });
+		refetch();
+		navigate(AppRoutes.AUTH_LOGIN);
 	};
+
 	return (
 		<div
 			className={`h-16 w-full absolute left-0 bottom-0 border border-r
@@ -26,15 +29,31 @@ export const Sidebar = () => {
 			<div className="flex h-full md:flex-col">
 				<SingleButton
 					onClick={() => {
-						navigate("/users/all");
+						navigate("/search");
+					}}
+					icon={<EmojiIcon>🔍</EmojiIcon>}
+				>
+					Search
+				</SingleButton>
+				<SingleButton
+					onClick={() => {
+						navigate("/users");
 					}}
 					icon={<EmojiIcon>🍻</EmojiIcon>}
 				>
 					Friends
 				</SingleButton>
-				<SingleButton icon={<EmojiIcon>📖</EmojiIcon>}>Messages</SingleButton>
+
+				<SingleButton
+					onClick={() => {
+						navigate("/messages");
+					}}
+					icon={<EmojiIcon>📖</EmojiIcon>}
+				>
+					Messages
+				</SingleButton>
 				<SingleButton icon={<EmojiIcon>🙎🏻‍♂️</EmojiIcon>}>Profile</SingleButton>
-				<SingleButton onClick={logout} icon={<EmojiIcon>🏃🏻‍♂️</EmojiIcon>}>
+				<SingleButton onClick={handleLogout} icon={<EmojiIcon>🏃🏻‍♂️</EmojiIcon>}>
 					Logout
 				</SingleButton>
 			</div>

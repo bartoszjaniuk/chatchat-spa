@@ -1,8 +1,6 @@
-import { authServiceQueryKeys } from "./../../queryKeys/queryKeys.consts";
-import { API_URL } from "src/envs";
-import { LoginResponse } from "./models/loginResponse.types";
 import axios, { AxiosInstance, AxiosResponse } from "axios";
-import { UserCredentials } from "./models/userCredentials.types";
+import { API_URL } from "src/envs";
+import { UserCredentials, LoginResponse, authServiceQueryKeys } from "../..";
 
 class AuthService {
 	private httpClient: AxiosInstance;
@@ -30,9 +28,9 @@ class AuthService {
 		this.responseHandler(
 			await this.httpClient.get(authServiceQueryKeys.logout()),
 		);
-	getSession = async (signal: AbortSignal) =>
+	getSession = async () =>
 		this.responseHandler(
-			await this.httpClient.get(authServiceQueryKeys.session(), { signal }),
+			await this.httpClient.get(authServiceQueryKeys.session()),
 		);
 }
 export const authService = new AuthService(API_URL);

@@ -1,4 +1,4 @@
-import { AuthStatus } from "../models";
+import { AuthStatus } from "..";
 import { SessionPayload } from "../models/sessionPayload.model";
 import { SessionQueryStatus } from "../models/sessionQueryStatus";
 
