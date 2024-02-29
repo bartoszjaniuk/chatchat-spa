@@ -1,17 +1,18 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "src/app/providers/authProvider/AuthProvider";
 import { AppRoutes } from "src/app/router/enums/appRoutes.enum";
-import { useConversation } from "./hooks/useConversation/useConversation";
 import { SingleMessage } from "./components/singleMessage/SingleMessage";
 import { useEffect } from "react";
 import { MessageInput } from "./components/messageInput/MessageInput";
-import { useTypingActivity } from "./hooks/useTypingActivity/useTypingActivity";
+import { useConversation } from "../providers/webSocketProvider/hooks/useConversation/useConversation";
+import { useTypingActivity } from "../providers/webSocketProvider/hooks/useTypingActivity/useTypingActivity";
 
 export const Conversation = () => {
 	const params = useParams();
 	const chatId = Number(params.id);
 	const { user } = useAuth();
 	const navigate = useNavigate();
+
 	const { isChatParticipant, messages, chatTitle } = useConversation(chatId);
 	const { isUserTyping, handleTyping } = useTypingActivity(chatId);
 

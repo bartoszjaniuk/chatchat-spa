@@ -1,5 +1,5 @@
 import { ChangeEvent, useState } from "react";
-import { useSendMessage } from "../../hooks/useSendMessage/useSendMessage";
+import { useSendMessage } from "src/app/providers/webSocketProvider/hooks/useSendMessage/useSendMessage";
 
 type MessageInputProps = {
 	handleTyping: VoidFunction;

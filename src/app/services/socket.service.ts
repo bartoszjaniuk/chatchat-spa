@@ -6,6 +6,7 @@ export class SocketService {
 
 	constructor(API_URL: string) {
 		this.socket = io(API_URL, {
+			// autoConnect: false,
 			withCredentials: true,
 			transports: ["websocket"],
 		});
