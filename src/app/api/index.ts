@@ -17,6 +17,8 @@ import { UserThreads } from "./services/chatService/models/chat.model";
 import { codeRedirectionInterceptor } from "./utils/codeRedirection";
 import { authInterceptor } from "./utils/authInterceptor";
 import { chatService } from "./services/chatService/chat.service";
+import { FilteredUsers } from "./services/userService/models/filteredUsers";
+import { UserFriends } from "./services/userService/models/userFriends";
 
 // Query Keys
 export { authServiceQueryKeys, userServiceQueryKeys, chatServiceQueryKeys };
@@ -25,7 +27,14 @@ export { authServiceQueryKeys, userServiceQueryKeys, chatServiceQueryKeys };
 export { chatService, authService, userService };
 
 // Models
-export type { LoginResponse, UserAuthResponse, UserCredentials, UserThreads };
+export type {
+	LoginResponse,
+	UserAuthResponse,
+	UserCredentials,
+	UserThreads,
+	FilteredUsers,
+	UserFriends,
+};
 
 // Utils
 export {

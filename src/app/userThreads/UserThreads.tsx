@@ -10,7 +10,7 @@ export const UserThreads = () => {
 		<div className="p-4">
 			{!data?.length && <div>You don't have any threads</div>}
 			{data?.map((thread) => (
-				<Thread key={thread.id} {...thread} />
+				<Thread key={thread.chatId} {...thread} />
 			))}
 		</div>
 	);

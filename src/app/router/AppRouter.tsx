@@ -9,6 +9,7 @@ import { Conversation } from "../conversation/Conversation";
 import { ErrorPage } from "../error/ErrorPage";
 import { Home } from "../home/Home";
 import { UserThreads } from "../userThreads/UserThreads";
+import { Users } from "../users/Users";
 
 export const AppRouter = () => {
 	return (
@@ -23,6 +24,7 @@ export const AppRouter = () => {
 				}
 			>
 				<Route element={<Home />} path={AppRoutes.HOME} />
+				<Route element={<Users />} path={AppRoutes.APP_USERS} />
 				<Route element={<SearchUsers />} path={AppRoutes.SEARCH} />
 				<Route element={<UserThreads />} path={AppRoutes.MESSAGES} />
 				<Route element={<Conversation />} path={AppRoutes.CONVERSATION} />
