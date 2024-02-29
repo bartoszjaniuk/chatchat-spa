@@ -41,7 +41,6 @@ export const useConversation = (chatId: number) => {
 	useEffect(() => {
 		setIsFetching(true);
 		if (isFetching) {
-			console.log("joinToChat");
 			socket?.emit("joinToChat", Number(chatId));
 		}
 	}, [isFetching, chatId, socket]);

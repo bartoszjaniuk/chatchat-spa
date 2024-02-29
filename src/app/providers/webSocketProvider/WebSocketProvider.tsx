@@ -34,9 +34,7 @@ export const WebSocketProvider = ({ children }: PropsWithChildren) => {
 			transports: ["websocket"],
 		});
 		setSocket(newSocket);
-		console.log("WebSocketProvider OPEN");
 		return () => {
-			console.log("WebSocketProvider CLOSE");
 			newSocket.close();
 		};
 	}, []);
