@@ -1,7 +1,7 @@
 import { API_URL } from "src/envs";
 import { UserThreads, chatServiceQueryKeys } from "../..";
 import { ApiService } from "../apiService/apiService.service";
-import { CreateChat } from "./models/chat.model";
+import { CreateChat, CreatedChatResponse } from "./models/chat.model";
 
 export class ChatService extends ApiService {
 	constructor() {
@@ -15,7 +15,10 @@ export class ChatService extends ApiService {
 
 	createChat = async (payload: CreateChat) =>
 		this.responseHandler(
-			await this.httpClient.post(chatServiceQueryKeys.createChat(), payload),
+			await this.httpClient.post<CreatedChatResponse>(
+				chatServiceQueryKeys.createChat(),
+				payload,
+			),
 		);
 }
 

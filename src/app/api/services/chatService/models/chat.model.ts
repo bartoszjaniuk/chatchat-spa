@@ -12,3 +12,7 @@ export type CreateChat = {
 	userId: number;
 	username: string;
 };
+
+export type CreatedChatResponse = {
+	chatId: number;
+};

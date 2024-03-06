@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useWebSocket } from "../../WebSocketProvider";
 
-export const useTypingActivity = (chatId: number) => {
+export const useTypingActivity = (chatId: number | undefined) => {
 	const { socket } = useWebSocket();
 	const [isUserTyping, setIsUserTyping] = useState(false);
 	const [timer, setTimer] = useState<number | undefined>(undefined);

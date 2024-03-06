@@ -1,4 +1,4 @@
-export type FilteredUsers = {
+export type FilteredUser = {
 	id: number;
 	avatar: string | null;
 	email: string;

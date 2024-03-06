@@ -16,5 +16,5 @@ export const userServiceQueryKeys = {
 export const chatServiceQueryKeys = {
 	chat: () => "chat",
 	createChat: () => "chat/create",
-	threads: () => `${chatServiceQueryKeys.chat()}/threads`,
+	threads: () => "chat/threads",
 };

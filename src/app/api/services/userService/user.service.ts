@@ -1,6 +1,6 @@
 import { stringify } from "qs";
 import { API_URL } from "src/envs";
-import { FilteredUsers, UserFriends, userServiceQueryKeys } from "../..";
+import { FilteredUser, UserFriend, userServiceQueryKeys } from "../..";
 import { ApiService } from "../apiService/apiService.service";
 
 export class UserService extends ApiService {
@@ -11,7 +11,7 @@ export class UserService extends ApiService {
 	getFilteredUsers = async (params: UserParams) => {
 		const queryString = getQueryStringFromParams(params);
 		return this.responseHandler(
-			await this.httpClient.get<FilteredUsers[]>(`/users${queryString}`),
+			await this.httpClient.get<FilteredUser[]>(`/users${queryString}`),
 		);
 	};
 
@@ -20,7 +20,7 @@ export class UserService extends ApiService {
 
 	getFriends = async () =>
 		this.responseHandler(
-			await this.httpClient.get<UserFriends[] | []>(
+			await this.httpClient.get<UserFriend[] | []>(
 				userServiceQueryKeys.friends(),
 			),
 		);

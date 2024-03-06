@@ -1,4 +1,4 @@
-export type UserFriends = {
+export type UserFriend = {
 	id: number;
 	email: string;
 	username: string;

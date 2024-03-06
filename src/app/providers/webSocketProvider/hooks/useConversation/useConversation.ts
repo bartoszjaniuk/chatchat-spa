@@ -13,15 +13,14 @@ export type ChatMessage = {
 	};
 };
 
-export const useConversation = (chatId: number) => {
+export const useConversation = (chatId: number | undefined) => {
 	const { socket } = useWebSocket();
-	const { data, isLoading } = useThreadsQuery();
+	const { data, isLoading, isFetched } = useThreadsQuery();
+
 	const [isFetching, setIsFetching] = useState(false);
 	const [messages, setMessages] = useState<ChatMessage[] | []>([]);
-	const isChatParticipant =
-		!isLoading && data?.some((thread) => thread.chatId === chatId);
 
-	const chatTitle = data && data[0].title;
+	const chatTitle = (data?.length && data[0].title) || "";
 
 	const messageListener = useCallback((message: ChatMessage[]) => {
 		setMessages((prevMessages) => [...prevMessages, ...message]);
@@ -53,5 +52,5 @@ export const useConversation = (chatId: number) => {
 		};
 	}, [messageListener, socket]);
 
-	return { isChatParticipant, messages, chatTitle };
+	return { data, messages, chatTitle, isLoading, isFetched };
 };

@@ -1,7 +1,7 @@
 import { useAddUserMutation } from "../hooks/useAddUserMutation/useAddUserMutation";
-import { SearchResult } from "../components/searchResult/SearchResult";
 import { SearchInput } from "../components/searchInput/SearchInput";
 import { useSearchUserQuery } from "../hooks/useSearchUserQuery/useSearchUserQuery";
+import { UserTile } from "src/app/shared/components/userTile/UserTile";
 
 export const SearchUsers = () => {
 	const { isLoading, data } = useSearchUserQuery();
@@ -17,10 +17,24 @@ export const SearchUsers = () => {
 					{data && data.length > 0 && (
 						<ul>
 							{data?.map((user) => (
-								<SearchResult
-									onClick={mutateAddUserToFriends}
-									user={user}
+								<UserTile
 									key={user.id}
+									user={user}
+									actionButton={
+										<>
+											{user.isFriend && <div className="text-2xl">✅</div>}
+											{!user.isFriend && (
+												<button
+													onClick={() =>
+														mutateAddUserToFriends(user.id.toString())
+													}
+													className="border p-4"
+												>
+													➕
+												</button>
+											)}
+										</>
+									}
 								/>
 							))}
 						</ul>
