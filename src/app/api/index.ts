@@ -13,12 +13,15 @@ import {
 } from "./queryKeys/queryKeys.consts";
 import { LoginResponse } from "./services/authService/models/loginResponse.types";
 import { UserAuthResponse } from "./services/authService/models/userAuthResponse.types";
-import { UserThreads } from "./services/chatService/models/chat.model";
+import {
+	CreatedChatResponse,
+	UserThreads,
+} from "./services/chatService/models/chat.model";
 import { codeRedirectionInterceptor } from "./utils/codeRedirection";
 import { authInterceptor } from "./utils/authInterceptor";
 import { chatService } from "./services/chatService/chat.service";
-import { FilteredUsers } from "./services/userService/models/filteredUsers";
-import { UserFriends } from "./services/userService/models/userFriends";
+import { FilteredUser } from "./services/userService/models/filteredUser";
+import { UserFriend } from "./services/userService/models/userFriend";
 
 // Query Keys
 export { authServiceQueryKeys, userServiceQueryKeys, chatServiceQueryKeys };
@@ -32,8 +35,9 @@ export type {
 	UserAuthResponse,
 	UserCredentials,
 	UserThreads,
-	FilteredUsers,
-	UserFriends,
+	FilteredUser,
+	UserFriend,
+	CreatedChatResponse,
 };
 
 // Utils

@@ -1,4 +1,5 @@
 export type UserThreads = {
+	users: string[];
 	chatId: number;
 	title: string;
 	lastMessage: {
@@ -11,4 +12,8 @@ export type UserThreads = {
 export type CreateChat = {
 	userId: number;
 	username: string;
+};
+
+export type CreatedChatResponse = {
+	chatId: number;
 };

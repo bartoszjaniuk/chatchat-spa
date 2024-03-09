@@ -1,5 +1,5 @@
 import { ChangeEvent, useState } from "react";
-import { useSendMessage } from "../../hooks/useSendMessage/useSendMessage";
+import { useSendMessage } from "src/app/providers/webSocketProvider/hooks/useSendMessage/useSendMessage";
 
 type MessageInputProps = {
 	handleTyping: VoidFunction;
@@ -26,7 +26,7 @@ export const MessageInput = ({ handleTyping, userId }: MessageInputProps) => {
 
 	return (
 		<textarea
-			className="h-[50px] md:h-[200px] p-4 bg-gray-100 break-words overflow-auto resize-none"
+			className="h-[100px] md:h-[200px] p-4 bg-gray-100 break-words overflow-auto resize-none"
 			id="message"
 			value={message}
 			onChange={handleChange}

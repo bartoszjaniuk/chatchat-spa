@@ -1,8 +1,8 @@
 export enum AppRoutes {
 	HOME = "/",
 	AUTH_LOGIN = "/auth",
-	APP_USERS = "/users",
+	FRIENDS = "/friends",
 	SEARCH = "/search",
-	MESSAGES = "/messages",
-	CONVERSATION = "/messages/:id",
+	THREADS = "/threads",
+	THREAD = "/threads/:id",
 }

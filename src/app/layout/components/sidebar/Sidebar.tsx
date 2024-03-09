@@ -37,7 +37,7 @@ export const Sidebar = () => {
 			<div className="flex h-full md:flex-col">
 				<SingleButton
 					onClick={() => {
-						navigate("/search");
+						navigate(AppRoutes.SEARCH);
 					}}
 					icon={
 						<EmojiIcon>
@@ -49,7 +49,7 @@ export const Sidebar = () => {
 				</SingleButton>
 				<SingleButton
 					onClick={() => {
-						navigate("/users");
+						navigate(AppRoutes.FRIENDS);
 					}}
 					icon={
 						<EmojiIcon>
@@ -62,7 +62,7 @@ export const Sidebar = () => {
 
 				<SingleButton
 					onClick={() => {
-						navigate("/messages");
+						navigate(AppRoutes.THREADS);
 					}}
 					icon={
 						<EmojiIcon>
@@ -70,7 +70,7 @@ export const Sidebar = () => {
 						</EmojiIcon>
 					}
 				>
-					Messages
+					Threads
 				</SingleButton>
 				<SingleButton
 					icon={

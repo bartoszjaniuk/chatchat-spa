@@ -15,7 +15,7 @@ export const useLogin = () => {
 			dispatch({ type: "SET_USER", payload: response.user });
 			navigate(AppRoutes.HOME);
 		} catch (error) {
-			console.log(error);
+			dispatch({ type: "SET_AUTH_STATE", payload: "unauthorized" });
 		}
 	};
 
