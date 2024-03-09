@@ -26,18 +26,23 @@ export const useWebSocket = () => {
 };
 
 export const WebSocketProvider = ({ children }: PropsWithChildren) => {
+	const [isFetching, setIsFetching] = useState(false);
 	const [socket, setSocket] = useState<Socket | null>(null);
 
 	useEffect(() => {
+		setIsFetching(true);
 		const newSocket = io(API_URL, {
 			withCredentials: true,
 			transports: ["websocket"],
 		});
-		setSocket(newSocket);
+
+		if (isFetching) {
+			setSocket(newSocket);
+		}
 		return () => {
 			newSocket.close();
 		};
-	}, []);
+	}, [isFetching]);
 
 	const value = useMemo(
 		() => ({

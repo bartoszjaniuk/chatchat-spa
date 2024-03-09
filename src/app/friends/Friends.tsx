@@ -2,17 +2,14 @@ import { useFriendsQuery } from "./hooks/useFriendsQuery/useFriendsQuery";
 import { GoComment } from "react-icons/go";
 import { useGetOrCreateChatMutation } from "./hooks/useGetOrCreateChatMutation/useGetOrCreateChatMutation";
 import { UserTile } from "../shared/components/userTile/UserTile";
-// import { useNavigate } from "react-router-dom";
 import { AppRoutes } from "../router";
 
-export const Users = () => {
+export const Friends = () => {
 	const { data, isLoading } = useFriendsQuery();
-	// const navigate = useNavigate();
 
-	const navigateToChat = (chatId: number) => {
-		window.location.assign(`${AppRoutes.MESSAGES}/${chatId}`);
-		// navigate(`${AppRoutes.MESSAGES}/${chatId}`);
-	};
+	// TODO: navigate doesn't work here. I GUESS IT'S TOO FAST
+	const navigateToChat = (chatId: number) =>
+		window.location.assign(`${AppRoutes.THREADS}/${chatId}`);
 
 	const { mutate } = useGetOrCreateChatMutation(navigateToChat);
 

@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 import { useWebSocket } from "../../WebSocketProvider";
+import { useParams } from "react-router-dom";
 
-export const useTypingActivity = (chatId: number | undefined) => {
+export const useTypingActivity = () => {
 	const { socket } = useWebSocket();
+	const params = useParams();
+	const chatId = params?.id ? Number(params.id) : undefined;
 	const [isUserTyping, setIsUserTyping] = useState(false);
 	const [timer, setTimer] = useState<number | undefined>(undefined);
 

@@ -1,37 +1,24 @@
-import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "src/app/providers/authProvider/AuthProvider";
-import { AppRoutes } from "src/app/router/enums/appRoutes.enum";
 import { SingleMessage } from "./components/singleMessage/SingleMessage";
-import { useEffect, useMemo } from "react";
 import { MessageInput } from "./components/messageInput/MessageInput";
-import { useConversation } from "../providers/webSocketProvider/hooks/useConversation/useConversation";
+
 import { useTypingActivity } from "../providers/webSocketProvider/hooks/useTypingActivity/useTypingActivity";
+import { useWebSocket } from "../providers/webSocketProvider/WebSocketProvider";
+import { useChatMessages } from "../providers/webSocketProvider/hooks/useChatMessages/useChatMessages";
+import { useChatError } from "../providers/webSocketProvider/hooks/useChatError/useChatError";
+import { useJoinToChat } from "../providers/webSocketProvider/hooks/useJoinToChat/useJoinToChat";
+import { useThread } from "../providers/webSocketProvider/hooks/useThread/useThread";
 
 export const Conversation = () => {
-	const params = useParams();
-	const chatId = params?.id ? Number(params.id) : undefined;
+	const { socket } = useWebSocket();
 	const { user } = useAuth();
-	const navigate = useNavigate();
 
-	const { data, messages, chatTitle, isLoading } = useConversation(chatId);
-	const { isUserTyping, handleTyping } = useTypingActivity(chatId);
+	const { isLoading, threadTitle, recipient } = useThread(user?.username);
+	const { isUserTyping, handleTyping } = useTypingActivity();
+	const messages = useChatMessages(socket);
 
-	const isChatParticipant = useMemo(
-		() => data && data.some((thread) => thread.chatId === chatId),
-		[chatId, data],
-	);
-
-	// TODO: INVESTIGATE
-	// console.log({ isLoading, isChatParticipant, data, messages });
-
-	useEffect(() => {
-		if (!isLoading && !isChatParticipant) {
-			// TODO: INVESTIGATE
-			// console.log("N A V I G A T E");
-			// navigate(AppRoutes.HOME);
-			window.location.assign(AppRoutes.HOME);
-		}
-	}, [isChatParticipant, isLoading, navigate]);
+	useJoinToChat(socket);
+	useChatError(socket);
 
 	if (isLoading) return <div className="p-4">Loading Chat...</div>;
 
@@ -40,12 +27,9 @@ export const Conversation = () => {
 			{!isLoading && (
 				<div className="w-full max-h-[calc(100vh-65px)] md:max-h-screen p-4 flex flex-col gap-4 ">
 					<div className="flex gap-4 border-b pb-2">
-						<h2>Title: {chatTitle}</h2>
-						<span>|</span>
-						Number of messages: {messages.length}
-						<div>{isUserTyping.toString()}: isUserTyping</div>
+						Your conversation with {threadTitle}
 					</div>
-					<div className="flex h-1/2 md:h-[90%] flex-col gap-4 overflow-y-scroll pr-4 pb-16">
+					<div className="flex h-[80vh] flex-col gap-4 overflow-y-scroll pr-4 pb-16">
 						{messages.length > 0 &&
 							messages.map((message, i) => {
 								return (
@@ -59,8 +43,8 @@ export const Conversation = () => {
 							})}
 
 						{isUserTyping && (
-							<div className="flex justify-end w-full border pr-4">
-								User is typing...
+							<div className="flex justify-end w-full  pr-4">
+								{recipient} is typing...
 							</div>
 						)}
 					</div>

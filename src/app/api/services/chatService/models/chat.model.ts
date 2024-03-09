@@ -1,4 +1,5 @@
 export type UserThreads = {
+	users: string[];
 	chatId: number;
 	title: string;
 	lastMessage: {
